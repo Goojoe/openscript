@@ -26,8 +26,9 @@ from email.header import Header  # 邮件主题
 with open('config.yaml', 'r') as config:
     configs = dict(yaml.safe_load(config.read()))
     webdata = (configs.get('webdata'))
-    mysqluser = (configs.get('mysqluser'))
-    mysqlpass = (configs.get('mysqlpass'))
+    keyid = (config.get('keyid'))
+    key= (config.get('key'))
+    bucketid = (config.get('bucketid'))
 
 
 
@@ -83,7 +84,8 @@ print("压缩文件/夹中")
 
 
 archive_password = 123456
-zip_dir = r'D:/OneDrive/OneDrive - goojoe/600-学习/610-编程/611-python/Python/script/python/'
+#user customize, shouldn't be here
+#zip_dir = r'D:/OneDrive/OneDrive - goojoe/600-学习/610-编程/611-python/Python/script/python/'
 
 
 def size_format(size):  # 构建判断函数
