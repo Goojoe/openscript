@@ -26,42 +26,24 @@ from email.header import Header  # 邮件主题
 with open('config.yaml', 'r') as config:
     configs = dict(yaml.safe_load(config.read()))
     webdata = (configs.get('webdata'))
-    keyid = (config.get('keyid'))
-    key= (config.get('key'))
-    bucketid = (config.get('bucketid'))
-
+    key = (configs.get('key'))
+    keyid = (configs.get('keyid'))
 
 
 # 判断文件是否存在
-if os.path.exists('upload'):
-    print('upload文件夹存在,X停止创建X')
-else:
-    print('upload文件夹不存在,√创建文件夹√')
-    uploaddir = os.mkdir("upload")
-
-if os.path.exists('upload/webdata'):
-    print('webdata文件夹存在,X停止创建X')
-else:
-    print('webdata文件夹不存在,√创建文件夹√')
-    uploaddir = os.mkdir("upload/webdata")
-
-if os.path.exists('upload/sqldata'):
-    print('sqldata文件夹存在,X停止创建X')
-else:
-    print('sqldata文件夹不存在,√创建文件夹√')
-    uploaddir = os.mkdir("upload/sqldata")
+def file_status_mkdir(file_path):
+    if os.path.exists(file_path):
+        print(file_path+'文件夹存在,X停止创建X')
+        return True
+    else:
+        print(file_path+'文件夹不存在,√创建文件√')
+        os.mkdir(file_path)
+        return False
+upload = file_status_mkdir('upload')
+webdata = file_status_mkdir('webdata')
+sqldata = file_status_mkdir('sqldata')
 
 
-
-# \符号替换
-'''
-slash = '\\'
-if slash in fliezip:
-    fliezip = str.replace(r'\\'', '/'')
-    print('替换压缩文件路径\\')
-if slash in flieout:
-    flieout = str.replace(r'\\'', '/'')
-'''
 # 判断压缩文件夹/文件是否存在
 if os.path.exists(flie_path):
     print('你的压缩路径正确,为:\n' + flie_path)
@@ -84,8 +66,6 @@ print("压缩文件/夹中")
 
 
 archive_password = 123456
-#user customize, shouldn't be here
-#zip_dir = r'D:/OneDrive/OneDrive - goojoe/600-学习/610-编程/611-python/Python/script/python/'
 
 
 def size_format(size):  # 构建判断函数
