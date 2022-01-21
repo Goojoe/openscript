@@ -17,31 +17,42 @@ import os  # 文件控制
 import shutil  # 移动文件
 import py7zr  # 压缩文件夹
 import smtplib  # SMTP邮件提醒
-import yaml #配置文件
+import yaml  # 配置文件
 # 邮件
 from email.mime.text import MIMEText  # 邮件文本处理
 from email.header import Header  # 邮件主题
 
-#变量
+# 变量
 with open('config.yaml', 'r') as config:
     configs = dict(yaml.safe_load(config.read()))
+    # 文件路径
     webdata = (configs.get('webdata'))
+    sqldata = (configs.get('sqldata'))
+    timenow = (configs.get('timenow'))
+    #认证
     key = (configs.get('key'))
     keyid = (configs.get('keyid'))
-
+    bucketid = (configs.get('bucketid'))
+    #SMTP
+    from_addr = (configs.get('from_addr'))
+    smtp_password = (configs.get('smtp_password'))
+    to_addr = (configs.get('to_addr'))
+    smtp_server = (configs.get('smtp_server'))
+    headline = (configs.get('headline'))
+    text = (configs.get('text'))
 
 # 判断文件是否存在
 def file_status_mkdir(file_path):
     if os.path.exists(file_path):
-        print(file_path+'文件夹存在,X停止创建X')
+        print(file_path + '文件夹存在,X停止创建X')
         return True
     else:
-        print(file_path+'文件夹不存在,√创建文件√')
+        print(file_path + '文件夹不存在,√创建文件√')
         os.mkdir(file_path)
         return False
-upload = file_status_mkdir('upload')
-webdata = file_status_mkdir('webdata')
-sqldata = file_status_mkdir('sqldata')
+file_status_mkdir('upload')
+file_status_mkdir('webdata')
+file_status_mkdir('sqldata')
 
 
 # 判断压缩文件夹/文件是否存在
@@ -64,7 +75,6 @@ b2api.authorize_account("production", keyid, key)
 bucket = b2api.get_bucket_by_id(bucketid)  # 返回与给定bucket_id匹配的存储桶
 print("压缩文件/夹中")
 
-
 archive_password = 123456
 
 
@@ -79,6 +89,7 @@ def size_format(size):  # 构建判断函数
         return '%.1f' % float(size / 1000000000) + 'GB'
     elif 1000000000000 <= size:
         return '%.1f' % float(size / 1000000000000) + 'TB'
+
 
 def make_archive(zip_name, zip_path, zip_passwd, dst_folder):
     # ----------压缩文件名---文件夹路径--压缩密码----目标路径
@@ -117,7 +128,6 @@ print(make_archive('unity.7z', flie_path, '123456', zip_dir))
 # shutil.make_archive(flieoutpath, 'zip', fliezip)
 
 
-
 print("上传中")
 # 上传文件
 # 本地磁盘上文件的路径+新 B2 文件的文件名
@@ -129,21 +139,6 @@ print("上传中")
 
 # SMTP邮件通知设置
 # 发送人/用户名
-from_addr = ''
-# 邮件SMTP授权码
-password = ''
-# 接受人
-to_addr = ''
-# SMTP服务器
-smtp_server = ''
-# 邮件标题
-headline = '备份完成，备份名' + b2name
-# 邮件正文
-text = 'Helloworld,你的文件名为:\n' \
-       + b2name \
-       + '\n' \
-       + '文件大小为:\n' \
-       + fliesize
 
 # 邮件信息
 msg = MIMEText(text, 'plain', 'utf-8')
