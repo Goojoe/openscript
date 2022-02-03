@@ -28,7 +28,7 @@ with open('config.yaml', 'r') as config:
     # 文件路径
     webdata = (configs.get('webdata'))
     sqldata = (configs.get('sqldata'))
-    timenow = (configs.get('timenow'))
+    timenow = time.strftime("%Y-%m-%d")
     #认证
     key = (configs.get('key'))
     keyid = (configs.get('keyid'))
@@ -160,7 +160,7 @@ server.connect(smtp_server, 25)
 # port：端口，25，465，587
 # 登录
 print('登录SMTP服务器')
-server.login(from_addr, password)
+server.login(from_addr, smtp_password)
 # uername:用户名
 # password:授权码
 # 发送邮件
