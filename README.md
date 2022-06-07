@@ -23,7 +23,7 @@ pip install requests lxml BeautifulSoup4 Pyemail
 
 方法:
 
-打开https://e-hentai.org/hentaiathome.php,浏览器按`F12`打开开发者工具,选择`Network/网络`刷新一下,点`hentaiathome.php`下滑找到`cookie`
+打开https://e-hentai.org/hentaiathome.php, 浏览器按`F12`打开开发者工具,选择`Network/网络`刷新一下,点`hentaiathome.php`下滑找到`cookie`
 
 右键复制值填入cookie即可
 
